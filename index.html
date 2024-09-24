@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Tiempos Natación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversión de Tiempos de Natación</h1>
+
+        <!-- Selección de piscina -->
+        <label for="poolType">Tipo de Piscina:</label>
+        <select id="poolType">
+            <option value="25to50">25m</option>
+            <option value="50to25">50m</option>
+        </select>
+
+        <!-- Selección de cronómetro -->
+        <label for="timerType">Cronómetro:</label>
+        <select id="timerType">
+            <option value="electronico">Electrónico</option>
+            <option value="manual">Manual</option>
+        </select>
+
+        <!-- Selección de estilo de nado -->
+        <label for="swimStyle">Estilo de Nado:</label>
+        <select id="swimStyle" onchange="updateDistances()">
+            <option value="libre">Libre</option>
+            <option value="espalda">Espalda</option>
+            <option value="braza">Braza</option>
+            <option value="mariposa">Mariposa</option>
+            <option value="estilos">Estilos Mixtos</option>
+        </select>
+
+        <!-- Selección de distancia -->
+        <label for="distance">Distancia:</label>
+        <select id="distance">
+            <option value="50">50m</option>
+            <option value="100">100m</option>
+            <option value="200">200m</option>
+            <option value="400">400m</option>
+            <option value="800">800m</option>
+            <option value="1500">1500m</option>
+        </select>
+
+        <!-- Selección de sexo -->
+        <label for="gender">Sexo:</label>
+        <select id="gender">
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+        </select>
+
+        <!-- Campo de tiempo a convertir -->
+        <label for="inputTime">Tiempo a Convertir (mm:ss.ms):</label>
+        <input type="text" id="inputTime" placeholder="00:00.00">
+
+        <!-- Botón de conversión -->
+        <button onclick="convertTime()">Convertir Tiempo</button>
+
+        <!-- Resultado -->
+        <h2>Resultado</h2>
+        <p id="result"></p>
+
+        <!-- Imagen decorativa -->
+        <div class="img-container">
+            <img src="https://img.icons8.com/doodle/48/000000/stopwatch.png" alt="Cronómetro">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyC96WmzaCuKKCRHSqmA12LIUdlZ4lB623M",
+          authDomain: "conversionmarcasnatacion.firebaseapp.com",
+          projectId: "conversionmarcasnatacion",
+          storageBucket: "conversionmarcasnatacion.appspot.com",
+          messagingSenderId: "835625527653",
+          appId: "1:835625527653:web:fd407077465dd993d5198c",
+          measurementId: "G-RDVTGTCDTC"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+</body>
+</html>
