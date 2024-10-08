@@ -78,7 +78,7 @@ function convertTime() {
         return;
     };
 
-    if(poolType != "50"){
+    if(distance != "50"){
         extraTime = 0.19;
     } else{
         extraTime = 0.29;
@@ -86,13 +86,13 @@ function convertTime() {
 
     console.log(timeInSeconds,additionalTime,extraTime,inputTime);
     resultado(poolType,timerType,timeInSeconds, additionalTime, extraTime, inputTime);
-    console.log(poolType,timerType);
+    
 }
 
 function resultado(poolType,timerType,timeInSeconds,additionalTime,extraTime){
     let result25mM = 0, result25mE = 0, result50mM = 0, result50mE = 0;
     switch (quetipoes(poolType,timerType)) {
-        case'25m':
+        case"25m":
             result25mM = timeInSeconds;
             result25mE = timeInSeconds + extraTime;
             result50mM = timeInSeconds + additionalTime;
@@ -104,15 +104,15 @@ function resultado(poolType,timerType,timeInSeconds,additionalTime,extraTime){
             result50mM = (timeInSeconds + additionalTime) - extraTime;
             result50mE = timeInSeconds + additionalTime;
             break;
-        case"50m":
+        case"50e":
             result25mM = timeInSeconds + additionalTime;
-            result25mE = (timeInSeconds - additionalTime) + extraTime;
+            result25mE = (timeInSeconds + additionalTime) + extraTime;
             result50mM = timeInSeconds;
             result50mE = timeInSeconds + extraTime;
             break;
-        case"50e":
-            result25mM = (timeInSeconds - additionalTime) - extraTime;
-            result25mE = timeInSeconds - additionalTime;
+        case"50m":
+            result25mM = (timeInSeconds + additionalTime) - extraTime;
+            result25mE = timeInSeconds + additionalTime;
             result50mM = timeInSeconds - extraTime;
             result50mE = timeInSeconds;
             break;
@@ -120,6 +120,7 @@ function resultado(poolType,timerType,timeInSeconds,additionalTime,extraTime){
         console.log("Error: Tipo de piscina o cronómetro no válido"); 
         
     }
+    
     console.log(result25mM, result25mE, result50mM, result50mE);
 
     document.getElementById('result25mM').innerText = formatTime(result25mM);
