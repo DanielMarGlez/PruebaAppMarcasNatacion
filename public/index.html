@@ -1,89 +1,97 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Tiempos Natación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/10.14.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/10.14.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/10.14.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/10.14.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/10.14.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/10.14.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/10.14.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/10.14.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/10.14.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/10.14.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <div class="container">
+        <h1>Conversión de Tiempos de Natación</h1>
+            
+        <!-- Selección de piscina -->
+        <label for="poolType">Tipo de Piscina:</label>
+        <select id="poolType">
+            <option value="25">25m</option>
+            <option value="50">50m</option>
+        </select>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+        <!-- Selección de cronómetro -->
+        <label for="timerType">Cronómetro:</label>
+        <select id="timerType">
+            <option value="manual">Manual</option>
+            <option value="electronico">Electrónico</option>
+        </select>
+
+        <!-- Selección de estilo de nado -->
+        <label for="swimStyle">Estilo de Nado:</label>
+        <select id="swimStyle" onchange="updateDistances()">
+            <option value="libre">Libre</option>
+            <option value="espalda">Espalda</option>
+            <option value="braza">Braza</option>
+            <option value="mariposa">Mariposa</option>
+            <option value="estilos">Estilos Mixtos</option>
+        </select>
+
+        <!-- Selección de distancia -->
+        <label for="distance">Distancia:</label>
+        <select id="distance">
+            <option value="50">50m</option>
+            <option value="100">100m</option>
+            <option value="200">200m</option>
+            <option value="400">400m</option>
+            <option value="800">800m</option>
+            <option value="1500">1500m</option>
+        </select>
+
+        <!-- Selección de sexo -->
+        <label for="gender">Sexo:</label>
+        <select id="gender">
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+        </select>
+
+        <!-- Selección de categoría -->
+        <label for="category">Categoría:</label>
+        <select id="category">
+            <option value="alevin12">Alevín 2012</option>
+            <option value="alevin13">Alevín 2013</option>
+            <option value="infantil11">Infantil 2011</option>
+            <option value="infantil10">Infantil 2010</option>
+            <option value="junior09">Junior 2009</option>
+            <option value="junior08">Junior 2008</option>
+            <option value="junior07">Junior 2007</option>
+            <option value="sub20">Sub-20</option>
+            <option value="absoluto">Absoluto</option>
+        </select>
+
+        <!-- Campo de tiempo a convertir -->
+        <label for="inputTime">Tiempo a Convertir (mm:ss.ms):</label>
+        <input type="text" id="inputTime" placeholder="00:00.00">
+
+        <!-- Botón de conversión -->
+        <button onclick="convertTime()">Convertir Tiempo</button>
+
+        <!-- Resultado -->
+        <h2>Resultado 25m Manual</h2>
+        <p id="result25mM"></p>
+        <h2>Resultado 25m Electrónico</h2>
+        <p id="result25mE"></p>
+        <h2>Resultado 50m Manual</h2>
+        <p id="result50mM"></p>
+        <h2>Resultado 50m Electrónico</h2>
+        <p id="result50mE"></p>
+        <h2>Marca mínima para CE</h2>
+        <p id="marcaminima"></p>
+
+        <!-- Imagen decorativa -->
+        <div class="img-container">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F012%2F067%2F332%2Foriginal%2Fhand-holding-a-stopwatch-timer-png.png&f=1&nofb=1&ipt=7758875f0ffcc88b4a6c2125ff67a16fa8b0df53170240958443e3a2e12e2aff&ipo=images" alt="Cronómetro">
+        </div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>
